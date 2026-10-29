@@ -25,7 +25,7 @@ Trabalho desenvolvido em grupo no do curso de **Análise e Desenvolvimento de Si
 
 ## 💡 Principais Funcionalidades
 
-* **Área do Paciente & Care Plus Rewards:** O paciente gere os seus agendamentos de forma transparente e ganha pontos de fidelidade baseados na previsibilidade e pontualidade.
+* **Área do Paciente & Care Plus Rewards:** O paciente gerencia seus agendamentos de forma transparente e ganha pontos de fidelidade com base na previsibilidade e na pontualidade.
 * **Painel do Operador:** Central de monitoramento onde a equipe acompanha o preenchimento de lacunas abertas de forma automatizada e gere a lista de espera por especialidade e urgência.
 * **Assistente Virtual "Carie":** Chatbot inteligente integrado para atendimento 24/7, focado em retenção (oferecendo telemedicina caso o paciente queira cancelar), triagem de urgência e consulta de pontos de fidelidade.
 * **Modo Escuro (Dark Mode):** Alternância nativa de tema desenvolvida para reduzir a fadiga visual de operadores e pacientes.
