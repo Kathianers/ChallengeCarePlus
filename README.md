@@ -19,7 +19,7 @@ Trabalho desenvolvido em grupo no do curso de **Análise e Desenvolvimento de Si
 
 **O Problema:** Altos índices de *no-show* nas consultas, gerando ociosidade médica, atrasos para pacientes urgentes e dificuldade na realocação ágil de vagas.
 
-**A Solução:** Uma plataforma web unificada que combina **Gamificação (Care Plus Rewards)** para engajar o paciente, um **Painel de Operador** com triagem inteligente e uma assistente virtual automatizada (**"Carie"**)[cite: 9, 13].
+**A Solução:** Uma plataforma web unificada que combina **Gamificação (Care Plus Rewards)** para engajar o paciente, um **Painel de Operador** com triagem inteligente e uma assistente virtual automatizada (**"Carie"**).
 
 ---
 
@@ -44,12 +44,12 @@ Para transformar a falta em engajamento positivo, o sistema valida as seguintes 
 
 ## 🗄️ Modelagem de Banco de Dados (MER)
 
-O Modelo Entidade-Relacionamento foi estruturado para suportar o perfil do paciente, o rastreio de status de consultas, médicos, especialidades e a gestão descentralizada da fila de espera[cite: 16]:
+O Modelo Entidade-Relacionamento foi estruturado para suportar o perfil do paciente, o rastreio de status de consultas, médicos, especialidades e a gestão descentralizada da fila de espera:
 
-* **PACIENTE:** Dados cadastrais, pontos de fidelidade e nível de *rewards*[cite: 16].
-* **CONSULTA:** Registo de data, hora, status, associando paciente e médico[cite: 16].
-* **MEDICO & ESPECIALIDADE:** Organização relacional da estrutura clínica[cite: 16].
-* **FILA_ESPERA:** Gestão automatizada cruzando prioridade e especialidade[cite: 16, 18].
+* **PACIENTE:** Dados cadastrais, pontos de fidelidade e nível de *rewards*.
+* **CONSULTA:** Registo de data, hora, status, associando paciente e médico.
+* **MEDICO & ESPECIALIDADE:** Organização relacional da estrutura clínica.
+* **FILA_ESPERA:** Gestão automatizada cruzando prioridade e especialidade.
 
 ---
 
