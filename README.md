@@ -2,7 +2,7 @@
 
 Plataforma web desenvolvida como desafio proposto pela **Care Plus**, com o objetivo de combater os altos índices de *no-show* (faltas em consultas) através de gamificação, automação de filas de espera e atendimento. 
 
-Trabalho desenvolvido em grupo no do curso de **Análise e Desenvolvimento de Sistemas (ADS)** da **FIAP.**
+Trabalho desenvolvido em grupo no do curso de **Análise e Desenvolvimento de Sistemas (ADS)** da **FIAP**.
 
 ---
 
