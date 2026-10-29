@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" type="image/jpeg" href="/img/icone.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Plus - Experiência do Paciente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg mb-4" id="mainNavbar">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="#">
+            <img src="img/Logo_Care.png" alt="Logo Care Plus" height="40" class="care-logo">
+        </a>
+        <button class="btn btn-outline-primary btn-sm" id="themeToggle" onclick="toggleTheme()" style="border-radius: 20px;">
+            🌙 Modo Escuro
+        </button>
+    </div>
+</nav>
+
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 2000;">
+  <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius: 12px; background-color: var(--cp-blue);">
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 mb-5">
+    
+    <div class="hero-banner mb-5">
+        <div class="row align-items-center p-4 p-md-5">
+            <div class="col-md-7 text-white">
+                <h1 class="fw-bold mb-3">Cuidar de você. <br>Esse é o nosso plano.</h1>
+                <p class="lead mb-4 opacity-90">Gestão inteligente de consultas para uma vida mais saudável e conectada.</p>
+                <button class="btn btn-light fw-bold text-primary" onclick="abrirFidelidade()">Conheça o Programa de Fidelidade</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-paciente-tab" data-bs-toggle="pill" data-bs-target="#pills-paciente" type="button" role="tab">Área do Paciente</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-operador-tab" data-bs-toggle="pill" data-bs-target="#pills-operador" type="button" role="tab">Painel do Operador</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="pills-tabContent">
+        
+        <div class="tab-pane fade show active" id="pills-paciente" role="tabpanel">
+            <div class="row justify-content-center">
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100" id="consultaCard">
+                        <div class="card-header consulta-header fw-bold text-center">
+                            Sua Próxima Consulta
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold mb-1">Dra. Maria Santos</h5>
+                            <p class="text-muted small mb-4">Odontologia Especializada</p>
+                            <div class="mb-4">
+                                <p class="card-text mb-2">📅 <strong>Data:</strong> 25/10/2026</p>
+                                <p class="card-text mb-3">🕒 <strong>Horário:</strong> 14:00</p>
+                            </div>
+                            <div class="d-grid gap-2 mt-auto">
+                                <div class="d-grid gap-2 mt-auto">
+                                    <button class="btn btn-primary" onclick="interagirConsulta('confirmar', event)">Confirmar presença (+ 100 pts)</button>
+                                    <button class="btn btn-outline-primary" onclick="interagirConsulta('reagendar', event)">Solicitar reagendamento (+ 50 pts)</button>
+                                    <button class="btn btn-link text-muted btn-sm mt-2" onclick="interagirConsulta('cancelar', event)">Não poderei comparecer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 mb-4">
+                    <div class="card loyalty-card h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                            <h4 class="fw-bold mb-1">Care Plus Rewards</h4>
+                            <p class="small opacity-75">Sua pontualidade gera benefícios</p>
+                            <h1 class="display-3 fw-bold my-3" id="pontosDisplay">350</h1>
+                            <p class="lead fw-medium">Pontos acumulados</p>
+                            <div class="progress mt-3" style="height: 20px;">
+                                <div class="progress-bar fw-bold" role="progressbar" style="width: 70%;" id="barraProgresso">Nível 3</div>
+                            </div>
+                            <p class="mt-3 mb-0 small opacity-75" id="proximoNivelTexto">Faltam 150 pontos para o Nível 4!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="pills-operador" role="tabpanel">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header fw-bold text-center">Nova entrada na fila</div>
+                        <div class="card-body">
+                            <form id="formFila">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted small fw-bold">PACIENTE</label>
+                                    <input type="text" class="form-control" id="nomePaciente" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted small fw-bold">CONTATO</label>
+                                    <input type="tel" class="form-control" id="telefonePaciente" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted small fw-bold">ESPECIALIDADE</label>
+                                    <select class="form-select" id="especialidadePaciente">
+                                        <option value="Cardiologia">Cardiologia</option>
+                                        <option value="Clínico Geral">Clínico Geral</option>
+                                        <option value="Endocrinologia">Endocrinologia</option>
+                                        <option value="Neurologia">Neurologia</option>
+                                        <option value="Odontologia">Odontologia</option>
+                                        <option value="Oftalmologia">Oftalmologia</option>
+                                        <option value="Ortopedia/Traumatologia">Ortopedia/Traumatologia</option>
+                                        <option value="Otorrinolaringologia">Otorrinolaringologia</option>
+                                        <option value="Psicologia">Psicologia</option>
+                                        <option value="Psiquiatria">Psiquiatria</option>
+                                        <option value="Urologia">Urologia</option>
+                                        <option value="Vascular">Vascular</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted small fw-bold">PRIORIDADE</label>
+                                    <select class="form-select" id="prioridadePaciente">
+                                        <option value="Baixa">Normal</option>
+                                        <option value="Alta">Urgente</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" onclick="adicionarFila()">Adicionar Paciente</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 mb-4">
+                    <div class="card">
+                        <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                            <span>Lista de espera inteligente</span>
+                            <button class="btn btn-sm btn-outline-primary" onclick="alocarHorario()">Alocar vaga liberada</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-borderless table-hover mb-0" id="tabelaFila">
+                                <thead style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                                    <tr>
+                                        <th class="text-muted small fw-bold p-3">NOME</th>
+                                        <th class="text-muted small fw-bold p-3">CONTATO</th>
+                                        <th class="text-muted small fw-bold p-3">ESPECIALIDADE</th>
+                                        <th class="text-muted small fw-bold p-3">STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                                        <td class="p-3 fw-medium">João Dias</td>
+                                        <td class="p-3 text-muted">(11) 91234-5678</td>
+                                        <td class="p-3 text-muted">Odontologia</td>
+                                        <td class="p-3 priority-Baixa">Aguardando</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 fw-medium">Maria Aparecida</td>
+                                        <td class="p-3 text-muted">(11) 99876-5432</td>
+                                        <td class="p-3 text-muted">Cardiologia</td>
+                                        <td class="p-3 priority-Alta">Urgente</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFidelidade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 24px; border: none;">
+            <div class="modal-header border-0 pb-0 pt-4 px-4">
+                <h5 class="fw-bold" style="color: var(--cp-blue);">Care Plus Rewards</h5>
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4">
+                <p class="text-muted small mb-4">Sua saúde e pontualidade valem prêmios! Ganhe pontos a cada interação positiva com sua agenda:</p>
+                
+                <div class="p-3 mb-4" style="background-color: var(--cp-light-blue); border-radius: 16px;">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>✅ Confirmar Presença</span>
+                        <span class="fw-bold text-primary">+100 pts</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>📅 Reagendar com Antecedência</span>
+                        <span class="fw-bold text-primary">+50 pts</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>📍 Cancelar (Aviso Prévio)</span>
+                        <span class="fw-bold text-primary">+10 pts</span>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mb-2" style="font-size: 0.9rem;">Por que acumular pontos?</h6>
+                <ul class="text-muted small ps-3">
+                    <li>Descontos em farmácias parceiras.</li>
+                    <li>Prioridade em reagendamentos de urgência.</li>
+                    <li>Acesso a conteúdos exclusivos de bem-estar.</li>
+                    <li>Upgrade para o Nível 4: Telemedicina Premium 24h.</li>
+                </ul>
+            </div>
+            <div class="modal-footer border-0 pt-2 pb-4 px-4">
+                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Entendido!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalNotificacaoPontos" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content text-center" style="border-radius: 24px; border: none; box-shadow: var(--card-shadow);">
+      <div class="modal-body p-4">
+        <div class="mb-3">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--cp-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+        </div>
+        <h5 class="fw-bold mb-2" style="color: var(--cp-blue);" id="tituloModalPontos">Ação Confirmada!</h5>
+        <p class="text-muted small mb-3" id="mensagemModalPontos">Mensagem de status aqui.</p>
+        
+        <div class="p-3 mb-3" style="background-color: var(--cp-light-blue); border-radius: 16px;">
+            <span class="d-block text-muted small mb-1">Você ganhou</span>
+            <h2 class="fw-bold text-primary mb-0" id="pontosGanhosModal">+100 pts</h2>
+        </div>
+        
+        <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAlocar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 24px; border: none; box-shadow: var(--card-shadow);">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="fw-bold" style="color: var(--cp-blue);">Alocar Vaga Liberada</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-4">
+        <p class="text-muted small mb-4">Selecione a especialidade da vaga que acabou de ser liberada. O sistema buscará automaticamente o próximo paciente, priorizando urgências.</p>
+        
+        <label class="form-label text-muted small fw-bold">ESPECIALIDADE DA VAGA</label>
+        <select class="form-select" id="especialidadeVaga">
+            <option value="Cardiologia">Cardiologia</option>
+            <option value="Clínico Geral">Clínico Geral</option>
+            <option value="Endocrinologia">Endocrinologia</option>
+            <option value="Neurologia">Neurologia</option>
+            <option value="Odontologia">Odontologia</option>
+            <option value="Oftalmologia">Oftalmologia</option>
+            <option value="Ortopedia/Traumatologia">Ortopedia/Traumatologia</option>
+            <option value="Otorrinolaringologia">Otorrinolaringologia</option>
+            <option value="Psicologia">Psicologia</option>
+            <option value="Psiquiatria">Psiquiatria</option>
+            <option value="Urologia">Urologia</option>
+            <option value="Vascular">Vascular</option>
+        </select>
+      </div>
+      <div class="modal-footer border-0 pt-2 pb-4 px-4">
+        <button type="button" class="btn btn-light text-muted" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="processarAlocacao()">Buscar e Alocar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="chat-callout" id="chatCallout" onclick="toggleChat()">
+    Olá, sou a Carie. Como posso te ajudar?
+</div>
+
+<button class="floating-chat-btn" onclick="toggleChat()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+    </svg>
+</button>
+
+<div class="floating-chat-window" id="chatWindow">
+    <div class="card shadow-lg" style="border: none;">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 16px 16px 0 0 !important; background-color: var(--cp-blue) !important; padding: 1rem;">
+            <span class="fw-bold">Carie - Assistente Virtual</span>
+            <button type="button" class="btn-close btn-close-white" style="font-size: 0.8rem;" onclick="toggleChat()"></button>
+        </div>
+        <div class="card-body p-3">
+            <div class="chat-container mb-3" id="chatBox" style="height: 280px; padding: 15px;">
+                <div class="bot-msg">Olá! Sou a Carie. Como posso ajudar você hoje?</div>
+            </div>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <button class="btn btn-outline-primary btn-sm chat-btn" onclick="sendQuickReply('Quero agendar')">Quero agendar</button>
+                <button class="btn btn-outline-primary btn-sm chat-btn" onclick="sendQuickReply('Ver meus pontos')">Ver meus pontos</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" style="border-radius: 12px 0 0 12px; font-size: 0.9rem;" placeholder="Digite aqui...">
+                <button class="btn btn-primary" style="border-radius: 0 12px 12px 0;" onclick="sendMessage()">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
